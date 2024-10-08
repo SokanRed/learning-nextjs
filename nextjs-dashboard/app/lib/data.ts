@@ -30,6 +30,7 @@ export async function fetchRevenue() {
 
 export async function fetchLatestInvoices() {
   try {
+    // Fetch the last 5 invoices, sorted by date
     const data = await sql<LatestInvoiceRaw>`
       SELECT invoices.amount, customers.name, customers.image_url, customers.email, invoices.id
       FROM invoices
@@ -65,6 +66,10 @@ export async function fetchCardData() {
       customerCountPromise,
       invoiceStatusPromise,
     ]);
+    // Log to check returned data
+console.log('Invoice Count Data:', data[0]);
+console.log('Customer Count Data:', data[1]);
+console.log('Invoice Status Data:', data[2]);
 
     const numberOfInvoices = Number(data[0].rows[0].count ?? '0');
     const numberOfCustomers = Number(data[1].rows[0].count ?? '0');
